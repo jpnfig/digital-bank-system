@@ -17,9 +17,9 @@ public class PhysicalAccount extends Account {
 		super();
 	}
 
-	public PhysicalAccount(Integer number, Double balance, Integer idTransaction, Long cpf, String personsName,
+	public PhysicalAccount(Integer numberAccount, Double balance, Integer idTransaction, Long cpf, String personsName,
 			Date birthDate) {
-		super(number, balance, idTransaction);
+		super(numberAccount, balance, idTransaction);
 		this.cpf = cpf;
 		this.personsName = personsName;
 		this.birthDate = birthDate;
@@ -33,11 +33,11 @@ public class PhysicalAccount extends Account {
 		this.cpf = cpf;
 	}
 
-	public String getName() {
+	public String getPersonsName() {
 		return personsName;
 	}
 
-	public void setName(String name) {
+	public void setPersonsName(String name) {
 		this.personsName = name;
 	}
 
@@ -47,22 +47,6 @@ public class PhysicalAccount extends Account {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
-	}
-
-	@Override
-	public void withdraw(double amount) {
-		if (balance < amount) {
-			throw new DomainException("Not enough balance");
-		}
-		balance -= amount;
-		idTransaction += 1;		
-	}
-
-	@Override
-	public void deposit(double amount) {
-		balance += amount;
-		idTransaction += 1;
-		
 	}
 
 	@Override
@@ -77,7 +61,6 @@ public class PhysicalAccount extends Account {
 			throw new DomainException("Insufficient balance for bank transfer!");
 		}
 		//Tax of $10 for the transfer of Legal (balance can be negative)
-		accountTarget.idTransaction = accountSource.idTransaction;
 		accountSource.withdraw(amount + 10.0);
 		accountTarget.deposit(amount);
 	}
@@ -91,7 +74,7 @@ public class PhysicalAccount extends Account {
 				+ ", Birthday: "
 				+ sdf.format(birthDate)
 				+ ", Number account: "
-				+ this.getNumber()
+				+ this.getNumberAccount()
 				+ ", Balance: "
 				+ String.format("%.2f", this.getBalance())
 				+ ", ID transaction: "
